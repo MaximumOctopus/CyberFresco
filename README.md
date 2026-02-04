@@ -1,8 +1,10 @@
 # CyberFresco
-Builds complete set of thumbnails, webpages with navigation, for a folder of images. C++ rewrite and major update.
+Quick and easy HTML image gallery creation.
+
+Builds a complete set of thumbnails, webpages (with navigation), and indexes, for a folder (or folders) of images. C++ rewrite and major update.
 
 Started in 2005, with the last release in 2008, this is a major update and rewrite.
 
-Release due in early 2026.
+Initial code is uploaded. Mostly functional, FTP uploading is not finished, lots of tweaks and QoL improvements to come.
 
 PAF
