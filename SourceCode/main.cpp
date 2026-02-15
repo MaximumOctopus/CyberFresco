@@ -14,9 +14,12 @@
 
 #include "BuildLocalWizard.h"
 #include "Checklist.h"
+#include "CFSettings.h"
 #include "NewSection.h"
 #include "PictureViewer.h"
+#include "ProjectInformation.h"
 #include "RelocateFolder.h"
+#include "ThemeEditor.h"
 
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
@@ -38,6 +41,8 @@ void __fastcall TfrmMain::FormCreate(TObject *Sender)
 	RunFrom = ExtractFilePath(Application->ExeName);
     LastImagesFolder = RunFrom;
 
+	CFSettings = new Settings(RunFrom + L"settings.ini");
+
 	CFAlbum = new Album();
 
 	CFThemeHandler = new CyberThemeHandler(RunFrom + L"Themes\\");
@@ -45,7 +50,6 @@ void __fastcall TfrmMain::FormCreate(TObject *Sender)
 	CFPageGenerator = new PageGenerator(RunFrom);
 
 	//  LoadHistory;
-	//  LoadSettings;
 
 	//LoadNoImage();
 
@@ -79,6 +83,7 @@ void __fastcall TfrmMain::FormClose(TObject *Sender, TCloseAction &Action)
 //	 SaveHistory;
 //	SaveSettings;
 
+    delete CFSettings;
 	delete CFAlbum;
 
 	delete CFPageGenerator;
@@ -115,48 +120,27 @@ void TfrmMain::LoadNoImage()
 #pragma region MainMenu
 void __fastcall TfrmMain::miNewAlbumClick(TObject *Sender)
 {
-/*  ret : word;
+	if (MessageDlg(L"Create a new album?  Your changes will not be saved!", mtWarning, mbYesNo, 0) == mrYes)
+	{
+		CFAlbum->Clear();
 
- begin
-  ret:=mrYes;
+		CFAlbum->AddEmptyAlbum();
 
-  if not(tsWelcome.TabVisible) then
-	ret = MessageDlg('Are you sure?', mtWarning, mbYesNo, 0);
+		BuildTreeDisplay();
 
-  if ret=mrYes then begin
-	frmTips.ClearTipDisplayHistory;
+		UpdateForNewAlbum();
 
-    if tvAlbum.Items.Count=0 then begin
-	  tvAlbum.Items.AddFirst(Nil, 'default album');
-	  tvAlbum.Items.GetFirstNode.ImageIndex    := ImageAlbum;
-	  tvAlbum.Items.GetFirstNode.SelectedIndex := ImageAlbum;
-	end
-	else begin
-	  tvAlbum.Items.GetFirstNode.DeleteChildren;
-	  tvAlbum.Items.GetFirstNode.Text:='default album';
-	end;
+		ToggleDisplay(true);
 
 	// -- now set defaults from Settings ---------------------------------------
-	if CFSettings.UseDefaultFTP then begin
-	  eWebsiteURL.Text :=CFSettings.WebsiteURL;
-	  eFTPHost.Text    :=CFSettings.FTPHost;
-	  eUsername.Text   :=CFSettings.Username;
-	  ePassword.Text   :=CFSettings.Password;
-	  eASHomeLink.Text :=CFSettings.HomeURL;
-	end;
-	// -------------------------------------------------------------------------
-
-	CFAlbum->Clear();
-	ClearEverything;
-	ToggleDisplay(True);
-	ToggleTabs(tm_Section);
-
-	tvAlbum.Items.GetFirstNode.Selected:=True;
-	tvAlbumClick(Nil);
-
-	if CFSettings.showtips then OpenTip('tip_new.htm', Tip_NewAlbum);
-  end;
-end;             */
+	//if CFSettings.UseDefaultFTP then begin
+//	  eWebsiteURL.Text :=CFSettings.WebsiteURL;
+//	  eFTPHost.Text    :=CFSettings.FTPHost;
+//	  eUsername.Text   :=CFSettings.Username;
+//	  ePassword.Text   :=CFSettings.Password;
+//	  eASHomeLink.Text :=CFSettings.HomeURL;
+//	end;
+	}
 }
 
 
@@ -211,7 +195,7 @@ void __fastcall TfrmMain::miOpenClick(TObject *Sender)
 
 				//AddToHistory(cbAIPTitle.Text, Filename, IntToStr(x), IntToStr(y));
 
-				//ToggleTabs(tm_Section);
+				ToggleTabs(tab_Album);
 
 				//  if errorstuff.Count>0 then
 				//	DoError('Error while loading album...', 'The following images are part of this album but could not be located. They will not be included in any upload or preview.', errorstuff);
@@ -227,25 +211,22 @@ void __fastcall TfrmMain::miOpenClick(TObject *Sender)
 
 void __fastcall TfrmMain::miCloseClick(TObject *Sender)
 {
-/* var
-  doclose : boolean;
+	if (CFAlbum->ChangesPending)
+	{
+		//if savewarning then
+//			if MessageDlg('Are you sure?'+#13+#13+'Your changes will not be saved!', mtWarning, mbYesNo, 0) == mrNo then
+//			  doclose:=False;
 
- begin
-  doclose:=True;
-
-  if savewarning then
-	if MessageDlg('Are you sure?'+#13+#13+'Your changes will not be saved!', mtWarning, mbYesNo, 0) == mrNo then
-	  doclose:=False;
-
-  if doclose then begin
-	tvAlbum.Items.Clear;
-	ToggleDisplay(False);
-	ToggleTabs(tm_Welcome);
-	currentsection:=Nil;
-	wbWelcome.Navigate(RunFrom+'data\intro\index.htm');
-	AlbumDoesntNeedSaving;
-  end;
-end;*/
+//		if doclose)
+//		{
+//			tvAlbum.Items.Clear;
+//			ToggleDisplay(False);
+//			ToggleTabs(tm_Welcome);
+//			currentsection:=Nil;
+//			wbWelcome.Navigate(RunFrom+'data\intro\index.htm');
+//			AlbumDoesntNeedSaving;
+//		}
+	}
 }
 
 
@@ -287,13 +268,30 @@ void __fastcall TfrmMain::miExitClick(TObject *Sender)
 
 void __fastcall TfrmMain::miSettingsClick(TObject *Sender)
 {
-/*
-  OpenSettings;
+	frmSettings->ShowTips = CFSettings->ShowTips;
 
-  with CFSettings do begin
-	ftpMain.Passive :=FTPPassive;
-	ftpMain.Port    :=FTPPort;
-  end;*/
+	frmSettings->UseDefaultFTP = CFSettings->UseDefaultFTP;
+	frmSettings->WebsiteURL = CFSettings->WebsiteURL;
+	frmSettings->FTPHost = CFSettings->FTPHost;
+	frmSettings->Username = CFSettings->Username;
+	frmSettings->Password = CFSettings->Password;
+	frmSettings->HomeURL = CFSettings->HomeURL;
+	frmSettings->FTPPassive = CFSettings->FTPPassive;
+	frmSettings->FTPPort = CFSettings->FTPPort;
+
+	if (frmSettings->ShowModal() == mrOk)
+	{
+		CFSettings->ShowTips = frmSettings->ShowTips;
+
+		CFSettings->UseDefaultFTP = frmSettings->UseDefaultFTP;
+		CFSettings->WebsiteURL = frmSettings->WebsiteURL;
+		CFSettings->FTPHost = frmSettings->FTPHost;
+		CFSettings->Username = frmSettings->Username;
+		CFSettings->Password = frmSettings->Password;
+		CFSettings->HomeURL = frmSettings->HomeURL;
+		CFSettings->FTPPassive = frmSettings->FTPPassive;
+		CFSettings->FTPPort = frmSettings->FTPPort;
+    }
 }
 
 
@@ -404,9 +402,10 @@ procedure TfrmMain.SectionIndexpages1Click(Sender: TObject);
 	// -------------------------------------------------------------------------
 
 	if lbPictureList.Items.Count>seMaxPerPage.Value then begin
-	  numpages:=Ceil(lbPictureList.Items.Count/seMaxPerPage.Value);
+	  int page_count = Ceil(lbPictureList.Items.Count/seMaxPerPage.Value);
 
-	  for t:=1 to numpages do begin
+	  for (int p = 0; p < page_count; p++)
+      {
 		fromx:=((t-1)*seMaxPerPage.Value);
 		tox:=fromx+seMaxPerPage.Value-1;
 		if tox>lbPictureList.Items.Count-1 then
@@ -1000,114 +999,111 @@ void __fastcall TfrmMain::tbPreviewAlbumClick(TObject *Sender)
 
 void __fastcall TfrmMain::tbInfoClick(TObject *Sender)
 {
-/*  numimages,rowidx, t,i,piccount : integer;
-  dataobject : PSectionInfo;
-  projectsize : Int64;
-
- begin
-  projectsize:=0;
-  numimages:=0;
-
-  with frmInfo do begin
-	sgMain.RowCount:=2;
-	sgMain.Cells[0,1]:='';
-
-	lAlbumName.Caption     :=cbAIPTitle.Text;
-	if AlbumInfo.filename<>'' then
-	  lAlbumFileName.Caption :=AlbumInfo.filename
-	else
-	  lAlbumFileName.Caption :='not yet saved';
-
-	for t:=0 to tvAlbum.Items.Count-1 do begin
-	  if tvAlbum.Items[t].Parent=tvAlbum.Items.GetFirstNode then begin // this is a section
-		if sgMain.Cells[0, sgMain.RowCount-1]='' then
-		  rowidx:=sgMain.RowCount-1
-		else begin
-		  sgMain.RowCount:=sgMain.RowCount+1;
-		  rowidx:=sgMain.RowCount-1;
-		end;
-
-		New(dataobject);
-		dataobject:=tvAlbum.Items[t].Data;
-		projectsize:=projectsize+dataobject^.SizeOfImages;
-		numimages:=numimages+dataobject^.ImageList.Count;
-
-		sgMain.Cells[0, rowidx]:=tvAlbum.Items[t].Text;
-		sgMain.Cells[1, rowidx]:=IntToStr(dataobject^.ImageList.Count);
-		sgMain.Cells[2, rowidx]:=ConvertToUsefulUnit(dataobject^.SizeOfImages);
-		sgMain.Cells[3, rowidx]:=dataobject^.Created;
-		sgMain.Cells[4, rowidx]:=dataobject^.LastUploaded;
-	  end;
-	end;
-
-	lAlbumSize.Caption:=ConvertToUsefulUnit(projectsize)+' ['+IntToStr(numimages)+' images]';
-
-	frmInfo.ShowModal;
-  end; */
+	ShowInformation();
 }
+
+
+void TfrmMain::ShowInformation()
+{
+	int imagecount = 0;
+//    long int projectsize = 0;
+
+	std::wstring a = CFAlbum->Title;
+	std::wstring b = L"not yet saved";
+	std::wstring c = L"0";
+
+	if (CFAlbum->ProjectFileName != L"")
+	{
+		b = CFAlbum->ProjectFileName;
+	}
+
+	for (int t = 0; t < CFAlbum->Sections.size(); t++)
+	{
+		std::wstring s1 = CFAlbum->Sections[t]->Name;
+		std::wstring s2 = std::to_wstring(CFAlbum->Sections[t]->Images.size());
+		std::wstring s3 = L"0";
+		std::wstring s4 = CFAlbum->Sections[t]->Created;
+		std::wstring s5 = CFAlbum->Sections[t]->LastUploaded;
+
+		frmProjectInformation->AddTableRow(s1, s2, s3, s4, s5);
+
+		imagecount += CFAlbum->Sections[t]->Images.size();
+	}
+
+	c = std::to_wstring(imagecount);        // 	lAlbumSize.Caption:=ConvertToUsefulUnit(projectsize)+' ['+IntToStr(numimages)+' images]';
+
+	frmProjectInformation->SetCaptions(a, b, c);
+
+	frmProjectInformation->ShowModal();
+ }
 #pragma end_region
 
 
 #pragma region Toolbar_Preview
 void TfrmMain::BuildSectionPreview()
-{              /*
-	  numpages, t : integer;
-	  fromx, tox : integer;
-	  newobjectdata : PSectionInfo;
+{
+//	  if Not(DirectoryExists(RunFrom+'preview\'+currentsection.Text+'\')) then
+//		MkDir(RunFrom+'preview\'+currentsection.Text+'\');
 
-	  New(newobjectdata);
-	  newobjectdata:=currentsection.Data;
+	// generate thumbnails -------------------------------------------------------
+	InitialisePreview(L"Generating Thumbnail images...", L"Current Process", L"Current File", 2);
+	// ---------------------------------------------------------------------------
 
-	  if Not(DirectoryExists(RunFrom+'preview\'+currentsection.Text+'\')) then
-		MkDir(RunFrom+'preview\'+currentsection.Text+'\');
+	std::wstring section_root = RunFrom + L"preview\\" + CFAlbum->Sections[SelectedSection]->Name + L"\\";
 
-	  // generate thumbnails -------------------------------------------------------
-	  lPreviewText.Caption:='Generating Thumbnail images...';
-	  pbPreview.Max:=lbPictureList.Items.Count-1;
-	  pbPreview.Position:=0;
-	  InitialisePreview('Generating Thumbnail Images...', 'Current Section', 'Album Preview', 2);
-	  // ---------------------------------------------------------------------------
+	if (CFAlbum->Sections[SelectedSection]->NeedToGenerateThumbnails)
+	{
+		std::wstring section_thumbnail = CFAlbum->Sections[SelectedSection]->GetThumbnailFileName();
 
-	  {if newobjectdata^.NeedToGenerateThumbnails then begin
-		for t:=0 to lbPictureList.Items.Count-1 do begin
-		  GenerateThumbNail(seMaxDimension.Value, lbPictureList.Items[t], RunFrom+'preview\'+currentsection.Text+'\'+IntToStr(t)+'-t.jpg');
-		  pbPreview.Position:=t;
-		end;
+		CFImageHandler->GenerateThumbnail(CFAlbum->ThumbnailSize,
+										  section_thumbnail,
+										  section_root + std::to_wstring(SelectedSection) + L"-t.jpg");
 
-		newobjectdata^.NeedToGenerateThumbnails:=False;
-		currentsection.Data:=newobjectdata;
-	  end; }
+		CFAlbum->Sections[SelectedSection]->NeedToGenerateThumbnails = false;
+	}
 
-	  // put theme images in correct location
-	  for t:=1 to 3 do
-		if ThemeList[cbThemeList.ItemIndex].ThemeParts[t].graphic<>'' then begin
-		  CopyFile(PChar(ThemeList[cbThemeList.ItemIndex].ThemeParts[t].graphic), PChar(RunFrom+'preview\'+currentsection.Text+'\i'+IntToStr(t)+'.jpg'), FALSE);
-		end;
+	// put theme images in correct location
+	for (int t = 0; t < 3; t++)
+	{
+//		if ( ThemeList[cbThemeList.ItemIndex].ThemeParts[t].graphic<>'')
+//		{
+//		  CopyFile(PChar(ThemeList[cbThemeList.ItemIndex].ThemeParts[t].graphic), PChar(RunFrom+'preview\'+currentsection.Text+'\i'+IntToStr(t)+'.jpg'), FALSE);
+//		}
+	}
 
-	  // ---------------------------------------------------------------------------
-	  lPreviewText.Caption:='Generating pages...';
-	  pbPreview.Max:=lbPictureList.Items.Count-1;
-	  pbPreview.Position:=0;
-	  // ---------------------------------------------------------------------------
+	// generate thumbnails -------------------------------------------------------
+	AddToLog(L"Generating pages...");
+	// ---------------------------------------------------------------------------
 
-	  if lbPictureList.Items.Count>seMaxPerPage.Value then begin
-		numpages:=Ceil(lbPictureList.Items.Count/seMaxPerPage.Value);
+	if (CFAlbum->Sections[SelectedSection]->Images.size() > CFAlbum->Sections[SelectedSection]->ThumbnailsPerPage)
+	{
+		int page_count = std::ceil(CFAlbum->Sections[SelectedSection]->Images.size() / CFAlbum->Sections[SelectedSection]->ThumbnailsPerPage);
 
-		for t:=1 to numpages do begin
-		  fromx:=((t-1)*seMaxPerPage.Value);
-		  tox:=fromx+seMaxPerPage.Value-1;
-		  if tox>lbPictureList.Items.Count-1 then
-			tox:=lbPictureList.Items.Count-1;
+		for (int t = 0; t < page_count; t++)
+		{
+			int image_start = t * CFAlbum->Sections[SelectedSection]->ThumbnailsPerPage;
+			int image_end = image_start + CFAlbum->Sections[SelectedSection]->ThumbnailsPerPage - 1;
 
-		  if t=1 then
-			GeneratePage(numpages, t, fromx, tox, newobjectdata^.PageHeaderColour, newobjectdata^.PageFooterColour, RunFrom+'preview\'+currentsection.Text+'\'+eAIPFilename.Text, False, newobjectdata^.ThumbnailsOnly)
-		  else
-			GeneratePage(numpages, t, fromx, tox, newobjectdata^.PageHeaderColour, newobjectdata^.PageFooterColour, RunFrom+'preview\'+currentsection.Text+'\p'+IntToStr(t)+'.html', False, newobjectdata^.ThumbnailsOnly);
-		end;
-	  end
-	  else
-		GeneratePage(1, 1, 0, lbPictureList.Items.Count-1, newobjectdata^.PageHeaderColour, newobjectdata^.PageFooterColour, RunFrom+'preview\'+currentsection.Text+'\'+eAIPFilename.Text, False, newobjectdata^.ThumbnailsOnly);
-		*/
+			if (image_end > CFAlbum->Sections[SelectedSection]->Images.size() - 1)
+			{
+				image_end = CFAlbum->Sections[SelectedSection]->Images.size() - 1;
+			}
+
+			CFPageGenerator->Page(CFAlbum, CFThemeHandler->Themes[0], SelectedSection,
+								  page_count, t + 1, image_start, image_end,
+								  CFAlbum->Sections[SelectedSection]->PageHeaderColour, CFAlbum->Sections[SelectedSection]->PageFooterColour,
+								  section_root + L"p" + std::to_wstring(t + 1) + L".html",
+								  false, CFAlbum->Sections[SelectedSection]->ThumbnailsOnly);
+		}
+	}
+	else
+	{
+		CFPageGenerator->Page(CFAlbum, CFThemeHandler->Themes[0], SelectedSection,
+							  1, 1, 0, CFAlbum->Sections[SelectedSection]->Images.size() - 1,
+							  CFAlbum->Sections[SelectedSection]->PageHeaderColour, CFAlbum->Sections[SelectedSection]->PageFooterColour,
+							  section_root + L"p1.html",
+							  false, CFAlbum->Sections[SelectedSection]->ThumbnailsOnly);
+	}
 }
 #pragma end_region
 
@@ -1136,6 +1132,10 @@ void TfrmMain::BuildTreeDisplay()
 				pic->ImageIndex = ImagePicture;
 			}
 		}
+
+		albumnode->Expand(false);
+
+		albumnode->Selected = true;
 	}
 }
 
@@ -1344,7 +1344,10 @@ void TfrmMain::GenerateAlbumIndex(const std::wstring folder, bool preview)
 
 void __fastcall TfrmMain::sbEditThemeClick(TObject *Sender)
 {
-//
+	frmThemeEditor->CFThemeHandler = CFThemeHandler;
+	frmThemeEditor->SelectedTheme = cbAIPTheme->ItemIndex;
+
+    frmThemeEditor->ShowModal();
 }
 #pragma end_region
 
@@ -1352,8 +1355,17 @@ void __fastcall TfrmMain::sbEditThemeClick(TObject *Sender)
 #pragma region Tab_PictureList
 void __fastcall TfrmMain::iPreviewClick(TObject *Sender)
 {
-/*
-  OpenPictureViewer(lbPictureList.Items);*/
+	if (SelectedSection >= 0)
+	{
+		frmPictureViewer->Clear();
+
+		for (int t = 0; t < CFAlbum->Sections[SelectedSection]->Images.size(); t++)
+		{
+			frmPictureViewer->Add(CFAlbum->Sections[SelectedSection]->Images[t]);
+		}
+
+		frmPictureViewer->ShowModal();
+	}
 }
 
 
@@ -1598,14 +1610,14 @@ void TfrmMain::RebuildViews(int index)
 
 	if (eSIndexImage->Text != L"" && FileExists(eSIndexImage->Text))
 	{
-	//	iSetForIndex.Picture.LoadFromFile(eSIndexImage.Text)
+		iSetForIndex->Picture->LoadFromFile(eSIndexImage->Text);
 	}
 	else
 	{
-		//ilBig.GetBitmap(1, iSetForIndex.Picture.Bitmap);
+		ilBig->GetBitmap(1, iSetForIndex->Picture->Bitmap);
 	}
 
-//  ilBig.GetBitmap(0, iPreview.Picture.Bitmap);
+	ilBig->GetBitmap(0, iPreview->Picture->Bitmap);
 
 //  UpdateStuff(Nil);
 
@@ -1641,7 +1653,7 @@ void __fastcall TfrmMain::seMaxAcrossChange(TObject *Sender)
 {
 	//UpdateStuff(Nil);
 
-	//AlbumNeedsSaving(Nil);
+	CFAlbum->ChangesPending = true;
 }
 
 
@@ -1653,11 +1665,11 @@ void __fastcall TfrmMain::seMaxPerPageChange(TObject *Sender)
 
 void __fastcall TfrmMain::seMaxDimensionChange(TObject *Sender)
 {
-/*	CFAlbum->Sections[CurrentSection]->NeedToGenerateThumbnails = true;
+	CFAlbum->Sections[SelectedSection]->NeedToGenerateThumbnails = true;
 
-	 UpdateStuff(Nil);
+//	 UpdateStuff(Nil);
 
-	 AlbumNeedsSaving(Nil); */
+	CFAlbum->ChangesPending = true;
 }
 
 
@@ -1685,16 +1697,19 @@ void __fastcall TfrmMain::SpeedButton3Click(TObject *Sender)
 
 
 void TfrmMain::RebuildThemePreview()
-{                                 /*
-	if FileExists(RunFrom+'themes\'+ThemeList[cbThemeList.ItemIndex].Location+'\preview.html')
+{
+	std::wstring theme_file_name = RunFrom + L"themes\\" + CFThemeHandler->Themes[cbAIPTheme->ItemIndex]->Location + L"\\preview.html";
+
+	if (FileExists(theme_file_name.c_str()))
 	{
-		wbTheme.Navigate(RunFrom+'themes\'+ThemeList[cbThemeList.ItemIndex].Location+'\preview.html')
+		wbTheme->Navigate(theme_file_name.c_str());
 	}
 	else
 	{
-		BuildThemePreview(ThemeList[cbThemeList.ItemIndex]);
-		wbTheme.Navigate(RunFrom+'themes\'+ThemeList[cbThemeList.ItemIndex].Location+'\preview.html')
-	} */
+		CFThemeHandler->BuildThemePreview(CFThemeHandler->Themes[cbAIPTheme->ItemIndex], theme_file_name);
+
+		wbTheme->Navigate(theme_file_name.c_str());
+	}
 }
 
 
@@ -1709,7 +1724,8 @@ void TfrmMain::RebuildIndexThemePreview()
 	else
 	{
 //		BuildIndexThemePreview(ThemeList[cbAIPTheme.ItemIndex]);
-  //		wbIndexTheme.Navigate(theme_file_name.c_str());
+
+  //		wbIndexTheme->Navigate(theme_file_name.c_str());
 	}
 }
 

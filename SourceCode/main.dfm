@@ -59,7 +59,7 @@ object frmMain: TfrmMain
     Top = 73
     Width = 1215
     Height = 767
-    ActivePage = TabSheet4
+    ActivePage = tsAlbum
     Align = alClient
     Images = ImageList1
     TabOrder = 2
@@ -79,15 +79,15 @@ object frmMain: TfrmMain
           Caption = 'Index Page'
           ImageIndex = 5
           object Label17: TLabel
-            Left = 3
-            Top = 103
+            Left = 19
+            Top = 111
             Width = 92
             Height = 15
             Caption = 'Available Themes'
           end
           object sbEditTheme: TSpeedButton
-            Left = 522
-            Top = 100
+            Left = 538
+            Top = 108
             Width = 65
             Height = 22
             Hint = 'edit this theme with the CyberFresco theme editor'
@@ -96,36 +96,36 @@ object frmMain: TfrmMain
             OnClick = sbEditThemeClick
           end
           object Label18: TLabel
-            Left = 2
-            Top = 73
+            Left = 18
+            Top = 81
             Width = 131
             Height = 15
             Caption = 'Thumbnail width (pixels)'
           end
           object Label19: TLabel
-            Left = 2
-            Top = 12
+            Left = 18
+            Top = 20
             Width = 61
             Height = 15
             Caption = 'Album Title'
           end
           object Label29: TLabel
-            Left = 2
-            Top = 45
+            Left = 18
+            Top = 53
             Width = 120
             Height = 15
             Caption = '"Index" page file name'
           end
           object Label33: TLabel
-            Left = 291
-            Top = 46
+            Left = 307
+            Top = 52
             Width = 99
             Height = 15
             Caption = '"Home" page path'
           end
           object cbAIPTheme: TComboBox
-            Left = 139
-            Top = 100
+            Left = 155
+            Top = 108
             Width = 377
             Height = 23
             Style = csDropDownList
@@ -133,8 +133,8 @@ object frmMain: TfrmMain
             OnChange = cbAIPThemeChange
           end
           object seAIPThumbnailWidth: TSpinEdit
-            Left = 139
-            Top = 70
+            Left = 155
+            Top = 78
             Width = 57
             Height = 24
             Hint = 
@@ -146,8 +146,8 @@ object frmMain: TfrmMain
             Value = 250
           end
           object cbAIPTitle: TEdit
-            Left = 139
-            Top = 9
+            Left = 155
+            Top = 17
             Width = 506
             Height = 23
             Hint = 'the album title appears at the top of the index page'
@@ -177,15 +177,15 @@ object frmMain: TfrmMain
             end
           end
           object eAIPFilename: TEdit
-            Left = 139
-            Top = 41
+            Left = 155
+            Top = 49
             Width = 137
             Height = 23
             TabOrder = 4
           end
           object eASHomeLink: TEdit
-            Left = 396
-            Top = 38
+            Left = 412
+            Top = 49
             Width = 249
             Height = 23
             TabOrder = 5
@@ -821,7 +821,7 @@ object frmMain: TfrmMain
             Left = 8
             Top = 8
             Width = 281
-            Height = 153
+            Height = 169
             TabOrder = 1
             object Label8: TLabel
               Left = 8
@@ -846,7 +846,7 @@ object frmMain: TfrmMain
             end
             object Bevel1: TBevel
               Left = 8
-              Top = 104
+              Top = 114
               Width = 265
               Height = 4
               Shape = bsTopLine
@@ -886,8 +886,8 @@ object frmMain: TfrmMain
               OnChange = seMaxDimensionChange
             end
             object cbSThumbnailsOnly: TCheckBox
-              Left = 11
-              Top = 122
+              Left = 19
+              Top = 130
               Width = 201
               Height = 17
               Caption = 'don'#39't include links to larger images'
@@ -1246,7 +1246,7 @@ object frmMain: TfrmMain
         Control = ToolBar1
         ImageIndex = -1
         MinHeight = 70
-        Width = 1509
+        Width = 1505
       end>
     object ToolBar1: TToolBar
       Left = 11

@@ -35,6 +35,7 @@
 #include "CyberThemeHandler.h"
 #include "ImageHandler.h"
 #include "PageGenerator.h"
+#include "Settings.h"
 
 //---------------------------------------------------------------------------
 class TfrmMain : public TForm
@@ -290,6 +291,7 @@ private:
 
     ImageHandler *CFImageHandler;
 	PageGenerator *CFPageGenerator;
+    Settings *CFSettings;
 
 	std::wstring RunFrom = L"";
 	std::wstring LastImagesFolder = L"";
@@ -298,6 +300,8 @@ private:
 
 	int SelectedSection = 0;
     bool ImagesChanged = false;
+
+	void ShowInformation();
 
     void LoadNoImage();
 

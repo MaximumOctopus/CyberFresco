@@ -255,7 +255,6 @@
         </None>
         <CppCompile Include="Code\Classes\Settings.cpp">
             <VirtualFolder>{3E3FA749-2192-408E-8AEF-C55A97A5C8D4}</VirtualFolder>
-            <Suffix>_0</Suffix>
             <BuildOrder>38</BuildOrder>
         </CppCompile>
         <None Include="Code\Classes\Settings.h">
@@ -280,6 +279,13 @@
             <DependentOn>Code\Forms\BuildLocalWizard.h</DependentOn>
             <BuildOrder>9</BuildOrder>
         </CppCompile>
+        <CppCompile Include="Code\Forms\CFSettings.cpp">
+            <VirtualFolder>{4DB89389-B198-448E-A882-A6E1EED555C1}</VirtualFolder>
+            <Form>frmSettings</Form>
+            <FormType>dfm</FormType>
+            <DependentOn>Code\Forms\CFSettings.h</DependentOn>
+            <BuildOrder>43</BuildOrder>
+        </CppCompile>
         <CppCompile Include="Code\Forms\Checklist.cpp">
             <VirtualFolder>{4DB89389-B198-448E-A882-A6E1EED555C1}</VirtualFolder>
             <Form>frmCheckList</Form>
@@ -289,7 +295,7 @@
         </CppCompile>
         <CppCompile Include="Code\Forms\FTPTest.cpp">
             <VirtualFolder>{4DB89389-B198-448E-A882-A6E1EED555C1}</VirtualFolder>
-            <Form>Form11</Form>
+            <Form>frmFTPTest</Form>
             <FormType>dfm</FormType>
             <DependentOn>Code\Forms\FTPTest.h</DependentOn>
             <BuildOrder>13</BuildOrder>
@@ -324,7 +330,7 @@
         </CppCompile>
         <CppCompile Include="Code\Forms\ProjectInformation.cpp">
             <VirtualFolder>{4DB89389-B198-448E-A882-A6E1EED555C1}</VirtualFolder>
-            <Form>Form10</Form>
+            <Form>frmProjectInformation</Form>
             <FormType>dfm</FormType>
             <DependentOn>Code\Forms\ProjectInformation.h</DependentOn>
             <BuildOrder>12</BuildOrder>
@@ -350,14 +356,6 @@
             <DependentOn>Code\Forms\SaveTheme.h</DependentOn>
             <BuildOrder>42</BuildOrder>
         </CppCompile>
-        <CppCompile Include="Code\Forms\Settings.cpp">
-            <VirtualFolder>{4DB89389-B198-448E-A882-A6E1EED555C1}</VirtualFolder>
-            <Form>Frame1</Form>
-            <FormType>dfm</FormType>
-            <DesignClass>TFrame</DesignClass>
-            <DependentOn>Code\Forms\Settings.h</DependentOn>
-            <BuildOrder>4</BuildOrder>
-        </CppCompile>
         <CppCompile Include="Code\Forms\ThemeEditor.cpp">
             <VirtualFolder>{B51D6F04-CCF1-4275-B9C9-F77C45152255}</VirtualFolder>
             <Form>frmThemeEditor</Form>
@@ -374,7 +372,7 @@
         </CppCompile>
         <CppCompile Include="Code\Forms\Wizard.cpp">
             <VirtualFolder>{4DB89389-B198-448E-A882-A6E1EED555C1}</VirtualFolder>
-            <Form>Form2</Form>
+            <Form>frmWizard</Form>
             <FormType>dfm</FormType>
             <DependentOn>Code\Forms\Wizard.h</DependentOn>
             <BuildOrder>3</BuildOrder>
@@ -408,19 +406,19 @@
             <DependentOn>main.h</DependentOn>
             <BuildOrder>2</BuildOrder>
         </CppCompile>
+        <FormResources Include="Code\Forms\NewSection.dfm"/>
         <FormResources Include="Code\Forms\PictureViewer.dfm"/>
         <FormResources Include="Code\Forms\ProjectInformation.dfm"/>
         <FormResources Include="Code\Forms\RelocateFolder.dfm"/>
         <FormResources Include="Code\Forms\Rename.dfm"/>
-        <FormResources Include="Code\Forms\SaveTheme.dfm"/>
-        <FormResources Include="Code\Forms\NewSection.dfm"/>
+        <FormResources Include="Code\Forms\LoadTheme.dfm"/>
         <FormResources Include="Code\Forms\BuildLocalWizard.dfm"/>
+        <FormResources Include="Code\Forms\CFSettings.dfm"/>
         <FormResources Include="Code\Forms\Checklist.dfm"/>
         <FormResources Include="Code\Forms\FTPTest.dfm"/>
         <FormResources Include="Code\Forms\Help.dfm"/>
-        <FormResources Include="Code\Forms\LoadTheme.dfm"/>
         <FormResources Include="main.dfm"/>
-        <FormResources Include="Code\Forms\Settings.dfm"/>
+        <FormResources Include="Code\Forms\SaveTheme.dfm"/>
         <FormResources Include="Code\Forms\ThemeEditor.dfm"/>
         <FormResources Include="Code\Forms\WarningDialog.dfm"/>
         <FormResources Include="Code\Forms\Wizard.dfm"/>
