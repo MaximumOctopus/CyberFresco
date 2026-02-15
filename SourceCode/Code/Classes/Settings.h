@@ -17,6 +17,8 @@
 class Settings
 {
 
+	std::wstring FileName = L"";
+
 public:
 
 	int Top = 0;
@@ -37,6 +39,6 @@ public:
 
 	Settings(const std::wstring);
 
-	bool Load(const std::wstring);
-    bool Save(const std::wstring);
+	bool Load();
+    bool Save();
 };

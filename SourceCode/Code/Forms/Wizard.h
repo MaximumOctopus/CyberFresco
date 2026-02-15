@@ -15,15 +15,13 @@
 #include <Vcl.Graphics.hpp>
 #include <Vcl.OleCtrls.hpp>
 //---------------------------------------------------------------------------
-class TForm2 : public TForm
+class TfrmWizard : public TForm
 {
 __published:	// IDE-managed Components
-	TBevel *Bevel1;
 	TShape *Shape1;
 	TBevel *Bevel2;
 	TLabel *Label1;
 	TLabel *lPage;
-	TImage *Image1;
 	TPanel *p1;
 	TLabel *Label2;
 	TLabel *Label3;
@@ -52,11 +50,23 @@ __published:	// IDE-managed Components
 	TOpenPictureDialog *opdWizard;
 	void __fastcall bBackClick(TObject *Sender);
 	void __fastcall bNextClick(TObject *Sender);
-private:	// User declarations
+	void __fastcall SpeedButton1Click(TObject *Sender);
+	void __fastcall sbSelectIndividualClick(TObject *Sender);
+	void __fastcall sbClearImagesClick(TObject *Sender);
+	void __fastcall eAlbumNameChange(TObject *Sender);
+	void __fastcall FormShow(TObject *Sender);
+private:
+
+	int CurrentPage = 1;
+
+	void SetPage();
+
+	void AddFromFolder(const std::wstring);
+
 public:		// User declarations
-	__fastcall TForm2(TComponent* Owner);
+	__fastcall TfrmWizard(TComponent* Owner);
 };
 //---------------------------------------------------------------------------
-extern PACKAGE TForm2 *Form2;
+extern PACKAGE TfrmWizard *frmWizard;
 //---------------------------------------------------------------------------
 #endif

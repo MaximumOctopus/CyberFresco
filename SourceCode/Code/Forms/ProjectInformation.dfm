@@ -1,26 +1,18 @@
-object Form10: TForm10
+object frmProjectInformation: TfrmProjectInformation
   Left = 0
   Top = 0
-  Caption = 'Form10'
-  ClientHeight = 713
-  ClientWidth = 1028
+  BorderStyle = bsDialog
+  Caption = 'Information'
+  ClientHeight = 395
+  ClientWidth = 541
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  Position = poMainFormCenter
   TextHeight = 15
-  object Bevel1: TBevel
-    Left = 0
-    Top = 0
-    Width = 1028
-    Height = 713
-    Align = alClient
-    Shape = bsFrame
-    ExplicitWidth = 546
-    ExplicitHeight = 307
-  end
   object Label1: TLabel
     Left = 88
     Top = 16
@@ -304,11 +296,11 @@ object Form10: TForm10
     Left = 72
     Top = 8
     Width = 2
-    Height = 289
+    Height = 379
   end
   object bbClose: TBitBtn
     Left = 462
-    Top = 272
+    Top = 362
     Width = 75
     Height = 25
     Cancel = True
@@ -316,15 +308,15 @@ object Form10: TForm10
     ModalResult = 1
     TabOrder = 0
   end
-  object sgMAin: TStringGrid
+  object sgMain: TStringGrid
     Left = 88
     Top = 104
     Width = 449
-    Height = 161
+    Height = 252
     DefaultRowHeight = 18
     FixedColor = 16308696
     FixedCols = 0
-    RowCount = 8
+    RowCount = 2
     ScrollBars = ssVertical
     TabOrder = 1
     ColWidths = (

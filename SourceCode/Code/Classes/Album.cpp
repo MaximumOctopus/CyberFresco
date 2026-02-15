@@ -19,6 +19,12 @@
 
 Album::Album()
 {
+	AddEmptyAlbum();
+}
+
+
+void Album::AddEmptyAlbum()
+{
 	Name = L"My Album";
 	Title = L"My Album";
 
@@ -26,7 +32,7 @@ Album::Album()
 
 	s->Caption = L"Section #1";
 
-    Sections.push_back(s);
+	Sections.push_back(s);
 }
 
 

@@ -31,7 +31,6 @@ object frmPictureViewer: TfrmPictureViewer
     Color = 15658734
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1418
     DesignSize = (
       904
       54)
@@ -157,7 +156,6 @@ object frmPictureViewer: TfrmPictureViewer
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 0
       OnChange = cbPicturesChange
-      ExplicitWidth = 1245
     end
   end
 end

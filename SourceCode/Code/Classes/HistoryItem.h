@@ -19,6 +19,12 @@ class HistoryItem
 
 public:
 
+	std::wstring Title = L"";
+	std::wstring FileName = L"";
+	int Sections = 0;
+	int Pictures = 0;
+    std::wstring Date = L"";
+
     HistoryItem();
 
 };

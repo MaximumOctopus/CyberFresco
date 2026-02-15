@@ -29,65 +29,73 @@ void TfrmPictureViewer::Add(const std::wstring file_name)
 
 void TfrmPictureViewer::ShowImage()
 {
-/*  Cursor:=crHourGlass;
+	if (FileExists(cbPictures->Items->Strings[cbPictures->ItemIndex]))
+	{
+		iView->Picture->LoadFromFile(cbPictures->Items->Strings[cbPictures->ItemIndex]);
 
-  if FileExists(cbPictures.Items[imageidx]) then begin
-	iView.Picture.LoadFromFile(cbPictures.Items[imageidx]);
+		// get file size and date attributes
+//		fh:=FileOpen(cbPictures.Items[imageidx], fmOpenWrite);
+//		fs:=GetFileSize(fh, Nil);
+//		fileSize.Caption:=ConvertToUsefulUnit(fs);
+//		FileClose(fh);
 
-	// get file size and date attributes
-	fh:=FileOpen(cbPictures.Items[imageidx], fmOpenWrite);
-	fs:=GetFileSize(fh, Nil);
-	fileSize.Caption:=ConvertToUsefulUnit(fs);
-	FileClose(fh);
+		//fileDate.Caption := DateTimeToStr(FileDateToDateTime(FileAge(cbPictures.Items[imageidx])));
+	}
+	else
+	{
+//		iView->Picture->LoadFromFile(RunFrom+'data\bignoimage.bmp');
 
-	fileDate.Caption := DateTimeToStr(FileDateToDateTime(FileAge(cbPictures.Items[imageidx])));
-  end
-  else begin
-	iView.Picture.LoadFromFile(RunFrom+'data\bignoimage.bmp');
+		//fileSize.Caption:='....';
+//		fileDate.Caption:='....';
+	}
 
-	fileSize.Caption:='....';
-	fileDate.Caption:='....';
-  end;
+	if (cbPictures->ItemIndex == 0)
+	{
+		sbPrevious->Enabled = false;
+	}
+	else
+	{
+		sbPrevious->Enabled = true;
+	}
 
-  if imageidx=0 then
-	sbPrevious.Enabled:=False
-  else
-	sbPrevious.Enabled:=True;
+	if (cbPictures->ItemIndex == cbPictures->Items->Count - 1)
+	{
+		sbNext->Enabled = false;
+	}
+	else
+	{
+		sbNext->Enabled = true;
+	}
 
-  if imageidx=cbPictures.Items.Count-1 then
-	sbNext.Enabled:=False
-  else
-	sbNext.Enabled:=True;
+	std::wstring caption = L"Image Viewer [" + std::to_wstring(cbPictures->ItemIndex + 1) + L" of " + std::to_wstring(cbPictures->Items->Count) + L"]";
 
-  Caption:='Image Viewer ['+IntToStr(imageidx+1)+' of '+IntToStr(cbPictures.Items.Count)+']';
-
-  Cursor:=crDefault;     */
+	Caption = caption.c_str();
 }
 
 
 void __fastcall TfrmPictureViewer::sbPreviousClick(TObject *Sender)
-{                 /*
+{
 	if (cbPictures->ItemIndex != 0)
 	{
 		cbPictures->ItemIndex--;
 	}
 
-	ShowImage(); */
+	ShowImage();
 }
 
 
 void __fastcall TfrmPictureViewer::sbNextClick(TObject *Sender)
-{               /*
+{
 	if (cbPictures->ItemIndex != cbPictures->Items->Count - 1)
 	{
 		cbPictures->ItemIndex++;
 	}
 
-	ShowImage();  */
+	ShowImage();
 }
 
 
 void __fastcall TfrmPictureViewer::cbPicturesChange(TObject *Sender)
 {
-//	ShowImage();
+	ShowImage();
 }

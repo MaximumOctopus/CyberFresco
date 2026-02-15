@@ -243,13 +243,14 @@ void __fastcall TfrmThemeEditor::sbMenuBkgdImageClick(TObject *Sender)
 
 
 void TfrmThemeEditor::LoadTheme(int index)
-{/*
-  InternalThemeData:=ThemeList[themeindex];
+{
+	SelectedTheme = index;
 
-  Caption:='CyFredit '+CFitVersion+' / '+CFitDate+'    ['+InternalThemeData.Name+']';
+//	Caption = 'CyFredit '+CFitVersion+' / '+CFitDate+'    ['+InternalThemeData.Name+']';
 
-  BuildThemeMenu;
-  GeneratePreview;           */
+	BuildUIFromTheme();
+
+//	GeneratePreview();
 }
 
 
@@ -286,7 +287,7 @@ void TfrmThemeEditor::GeneratePreview()
 		CFThemeHandler->BuildIndexThemePreview(CFThemeHandler->Themes[SelectedTheme], filename, RunFrom);
 	}
 
-//	wbPreview->Navigate(filename);
+	wbPreview->Navigate(filename.c_str());
 }
 
 

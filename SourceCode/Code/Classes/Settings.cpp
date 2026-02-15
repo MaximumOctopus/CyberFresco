@@ -20,13 +20,15 @@
 
 Settings::Settings(const std::wstring file_name)
 {
-    Load(file_name);
+	FileName = file_name;
+
+	Load();
 }
 
 
-bool Settings::Load(const std::wstring file_name)
+bool Settings::Load()
 {
-	Ini* config = new Ini(file_name);
+	Ini* config = new Ini(FileName);
 
 	if (config->Loaded)
 	{
@@ -56,9 +58,9 @@ bool Settings::Load(const std::wstring file_name)
 }
 
 
-bool Settings::Save(const std::wstring file_name)
+bool Settings::Save()
 {
-	std::ofstream file(file_name);
+	std::ofstream file(FileName);
 
 	if (file)
 	{

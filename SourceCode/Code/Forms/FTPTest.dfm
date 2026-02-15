@@ -1,90 +1,106 @@
-object Form11: TForm11
+object frmFTPTest: TfrmFTPTest
   Left = 0
   Top = 0
-  Caption = 'Form11'
-  ClientHeight = 441
-  ClientWidth = 624
+  BorderStyle = bsDialog
+  Caption = 'FTP Test'
+  ClientHeight = 295
+  ClientWidth = 476
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  Position = poOwnerFormCenter
+  OnShow = FormShow
   TextHeight = 15
-  object Bevel1: TBevel
-    Left = 0
-    Top = 0
-    Width = 624
-    Height = 441
-    Align = alClient
-    Shape = bsFrame
-    ExplicitWidth = 482
-    ExplicitHeight = 248
+  object lHostValue: TLabel
+    Left = 96
+    Top = 8
+    Width = 12
+    Height = 15
+    Caption = '....'
+  end
+  object lRemoteValue: TLabel
+    Left = 96
+    Top = 71
+    Width = 12
+    Height = 15
+    Caption = '....'
+  end
+  object lUserNameValue: TLabel
+    Left = 96
+    Top = 29
+    Width = 12
+    Height = 15
+    Caption = '....'
+  end
+  object lPasswordValue: TLabel
+    Left = 96
+    Top = 50
+    Width = 12
+    Height = 15
+    Caption = '....'
   end
   object lHost: TLabel
-    Left = 96
-    Top = 8
-    Width = 28
-    Height = 15
-    Caption = 'lHost'
-  end
-  object lremote: TLabel
-    Left = 96
-    Top = 56
-    Width = 28
-    Height = 15
-    Caption = 'lHost'
-  end
-  object lusername: TLabel
-    Left = 96
-    Top = 24
-    Width = 28
-    Height = 15
-    Caption = 'lHost'
-  end
-  object lpassword: TLabel
-    Left = 96
-    Top = 40
-    Width = 28
-    Height = 15
-    Caption = 'lHost'
-  end
-  object Host: TLabel
     Left = 8
     Top = 8
-    Width = 25
+    Width = 28
     Height = 15
-    Caption = 'Host'
+    Caption = 'lHost'
   end
-  object Username: TLabel
+  object lUserName: TLabel
     Left = 8
-    Top = 24
-    Width = 53
+    Top = 29
+    Width = 58
     Height = 15
-    Caption = 'Username'
+    Caption = 'lUserName'
   end
-  object llPassword: TLabel
+  object lPassword: TLabel
     Left = 8
-    Top = 40
+    Top = 50
     Width = 50
     Height = 15
     Caption = 'Password'
   end
-  object llRemote: TLabel
+  object lRemote: TLabel
     Left = 8
-    Top = 56
+    Top = 71
     Width = 62
     Height = 15
     Caption = 'Remote Dir.'
   end
   object mOutput: TMemo
     Left = 8
-    Top = 72
+    Top = 92
     Width = 465
     Height = 169
     TabOrder = 0
   end
+  object BitBtn1: TBitBtn
+    Left = 398
+    Top = 267
+    Width = 75
+    Height = 25
+    Cancel = True
+    Caption = 'Close'
+    ModalResult = 1
+    TabOrder = 1
+  end
+  object bTest: TBitBtn
+    Left = 8
+    Top = 267
+    Width = 75
+    Height = 25
+    Cancel = True
+    Caption = 'Test'
+    ModalResult = 1
+    TabOrder = 2
+    OnClick = bTestClick
+  end
   object testFTP: TIdFTP
+    OnDisconnected = testFTPDisconnected
+    OnConnected = testFTPConnected
     ConnectTimeout = 0
     NATKeepAlive.UseKeepAlive = False
     NATKeepAlive.IdleTimeMS = 0

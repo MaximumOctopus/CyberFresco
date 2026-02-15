@@ -20,7 +20,6 @@ __published:	// IDE-managed Components
 	TLabel *Label3;
 	TLabel *Label4;
 	TLabel *Label5;
-	TSpeedButton *SpeedButton1;
 	TImage *Image1;
 	TImage *Image2;
 	TImage *Image3;
@@ -33,12 +32,19 @@ __published:	// IDE-managed Components
 	TShape *Shape1;
 	TLabel *lSettings;
 	TImageList *ilCheckList;
+	TBitBtn *bClose;
 	void __fastcall FormShow(TObject *Sender);
+	void __fastcall Image1MouseMove(TObject *Sender, TShiftState Shift, int X, int Y);
+	void __fastcall Label1MouseMove(TObject *Sender, TShiftState Shift, int X, int Y);
+	void __fastcall FormMouseMove(TObject *Sender, TShiftState Shift, int X, int Y);
+
+
+
 private:	// User declarations
 public:
 	__fastcall TfrmCheckList(TComponent* Owner);
 
-    bool CheckList[7] = { false, false, false, false, false, false, false };
+    int CheckList[7] = {0, 0, 0, 0, 0, 0, 0 };
 };
 //---------------------------------------------------------------------------
 extern PACKAGE TfrmCheckList *frmCheckList;

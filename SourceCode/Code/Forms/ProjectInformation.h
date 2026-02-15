@@ -12,10 +12,9 @@
 #include <Vcl.Graphics.hpp>
 #include <Vcl.Grids.hpp>
 //---------------------------------------------------------------------------
-class TForm10 : public TForm
+class TfrmProjectInformation : public TForm
 {
 __published:	// IDE-managed Components
-	TBevel *Bevel1;
 	TLabel *Label1;
 	TLabel *Label2;
 	TLabel *Label3;
@@ -26,12 +25,18 @@ __published:	// IDE-managed Components
 	TImage *Image1;
 	TBevel *Bevel2;
 	TBitBtn *bbClose;
-	TStringGrid *sgMAin;
-private:	// User declarations
-public:		// User declarations
-	__fastcall TForm10(TComponent* Owner);
+	TStringGrid *sgMain;
+private:
+public:
+	__fastcall TfrmProjectInformation(TComponent* Owner);
+
+    void Reset();
+
+	void SetCaptions(const std::wstring, const std::wstring, const std::wstring);
+
+    void AddTableRow(const std::wstring, const std::wstring, const std::wstring, const std::wstring, const std::wstring);
 };
 //---------------------------------------------------------------------------
-extern PACKAGE TForm10 *Form10;
+extern PACKAGE TfrmProjectInformation *frmProjectInformation;
 //---------------------------------------------------------------------------
 #endif

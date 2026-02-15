@@ -14,26 +14,42 @@
 #include <IdTCPClient.hpp>
 #include <IdTCPConnection.hpp>
 #include <Vcl.ExtCtrls.hpp>
+#include <Vcl.Buttons.hpp>
 //---------------------------------------------------------------------------
-class TForm11 : public TForm
+class TfrmFTPTest : public TForm
 {
 __published:	// IDE-managed Components
-	TBevel *Bevel1;
+	TLabel *lHostValue;
+	TLabel *lRemoteValue;
+	TLabel *lUserNameValue;
+	TLabel *lPasswordValue;
 	TLabel *lHost;
-	TLabel *lremote;
-	TLabel *lusername;
-	TLabel *lpassword;
-	TLabel *Host;
-	TLabel *Username;
-	TLabel *llPassword;
-	TLabel *llRemote;
+	TLabel *lUserName;
+	TLabel *lPassword;
+	TLabel *lRemote;
 	TMemo *mOutput;
 	TIdFTP *testFTP;
-private:	// User declarations
-public:		// User declarations
-	__fastcall TForm11(TComponent* Owner);
+	TBitBtn *BitBtn1;
+	TBitBtn *bTest;
+	void __fastcall bTestClick(TObject *Sender);
+	void __fastcall testFTPConnected(TObject *Sender);
+	void __fastcall testFTPDisconnected(TObject *Sender);
+	void __fastcall FormShow(TObject *Sender);
+private:
+public:
+	__fastcall TfrmFTPTest(TComponent* Owner);
+
+	std::wstring RunFrom = L"";
+
+	std::wstring Host = L"";
+	std::wstring UserName = L"";
+	std::wstring Password = L"";
+	std::wstring Remote = L"";
+
+	bool Passive = false;
+	int FTPPort = 21;
 };
 //---------------------------------------------------------------------------
-extern PACKAGE TForm11 *Form11;
+extern PACKAGE TfrmFTPTest *frmFTPTest;
 //---------------------------------------------------------------------------
 #endif

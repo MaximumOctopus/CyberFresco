@@ -2,8 +2,8 @@ object frmThemeEditor: TfrmThemeEditor
   Left = 0
   Top = 0
   Caption = 'frmThemeEditor'
-  ClientHeight = 517
-  ClientWidth = 838
+  ClientHeight = 623
+  ClientWidth = 1057
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,6 +11,7 @@ object frmThemeEditor: TfrmThemeEditor
   Font.Name = 'Segoe UI'
   Font.Style = []
   Menu = MainMenu1
+  Position = poOwnerFormCenter
   OnConstrainedResize = FormConstrainedResize
   OnCreate = FormCreate
   TextHeight = 15
@@ -18,18 +19,20 @@ object frmThemeEditor: TfrmThemeEditor
     Left = 0
     Top = 0
     Width = 265
-    Height = 498
+    Height = 623
     Align = alLeft
     Caption = 'Panel1'
     TabOrder = 0
+    ExplicitHeight = 498
     object pcMain: TPageControl
       Left = 1
       Top = 70
       Width = 263
-      Height = 427
+      Height = 552
       ActivePage = TabSheet4
       Align = alClient
       TabOrder = 0
+      ExplicitHeight = 427
       object TabSheet4: TTabSheet
         Caption = 'Main'
         ImageIndex = 3
@@ -696,25 +699,19 @@ object frmThemeEditor: TfrmThemeEditor
   object wbPreview: TWebBrowser
     Left = 265
     Top = 0
-    Width = 573
-    Height = 498
+    Width = 792
+    Height = 623
     Align = alClient
     TabOrder = 1
+    ExplicitLeft = 266
+    ExplicitTop = -6
+    ExplicitHeight = 604
     ControlData = {
-      4C000000393B0000783300000000000000000000000000000000000000000000
+      4C000000DB510000644000000000000000000000000000000000000000000000
       000000004C000000000000000000000001000000E0D057007335CF11AE690800
       2B2E126208000000000000004C0000000114020000000000C000000000000046
       8000000000000000000000000000000000000000000000000000000000000000
       00000000000000000100000000000000000000000000000000000000}
-  end
-  object sbMain: TStatusBar
-    Left = 0
-    Top = 498
-    Width = 838
-    Height = 19
-    AutoHint = True
-    Panels = <>
-    SimplePanel = True
   end
   object MainMenu1: TMainMenu
     Left = 548

@@ -98,9 +98,11 @@ public:
 
 	Album();
 
+	void AddEmptyAlbum();
+	void Clear();
+
 	bool Load(const std::wstring);
 	bool Save(const std::wstring);
-	void Clear();
 
 	bool CreateFromFolder(const std::wstring);
     void AddImagesFromFolder(int, const std::wstring);

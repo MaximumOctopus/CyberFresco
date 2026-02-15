@@ -3,7 +3,7 @@ object frmCheckList: TfrmCheckList
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Check List'
-  ClientHeight = 238
+  ClientHeight = 233
   ClientWidth = 468
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -12,6 +12,7 @@ object frmCheckList: TfrmCheckList
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poMainFormCenter
+  OnMouseMove = FormMouseMove
   OnShow = FormShow
   TextHeight = 15
   object Label1: TLabel
@@ -27,6 +28,7 @@ object frmCheckList: TfrmCheckList
     Font.Name = 'MS Sans Serif'
     Font.Style = []
     ParentFont = False
+    OnMouseMove = Label1MouseMove
   end
   object Label2: TLabel
     Tag = 2
@@ -41,6 +43,7 @@ object frmCheckList: TfrmCheckList
     Font.Name = 'MS Sans Serif'
     Font.Style = []
     ParentFont = False
+    OnMouseMove = Label1MouseMove
   end
   object Label3: TLabel
     Tag = 3
@@ -55,6 +58,7 @@ object frmCheckList: TfrmCheckList
     Font.Name = 'MS Sans Serif'
     Font.Style = []
     ParentFont = False
+    OnMouseMove = Label1MouseMove
   end
   object Label4: TLabel
     Tag = 4
@@ -69,6 +73,7 @@ object frmCheckList: TfrmCheckList
     Font.Name = 'MS Sans Serif'
     Font.Style = []
     ParentFont = False
+    OnMouseMove = Label1MouseMove
   end
   object Label5: TLabel
     Tag = 5
@@ -83,13 +88,7 @@ object frmCheckList: TfrmCheckList
     Font.Name = 'MS Sans Serif'
     Font.Style = []
     ParentFont = False
-  end
-  object SpeedButton1: TSpeedButton
-    Left = 384
-    Top = 208
-    Width = 81
-    Height = 25
-    Caption = '&Close'
+    OnMouseMove = Label1MouseMove
   end
   object Image1: TImage
     Tag = 1
@@ -97,6 +96,7 @@ object frmCheckList: TfrmCheckList
     Top = 16
     Width = 16
     Height = 16
+    OnMouseMove = Image1MouseMove
   end
   object Image2: TImage
     Tag = 2
@@ -104,6 +104,7 @@ object frmCheckList: TfrmCheckList
     Top = 96
     Width = 16
     Height = 16
+    OnMouseMove = Image1MouseMove
   end
   object Image3: TImage
     Tag = 3
@@ -111,6 +112,7 @@ object frmCheckList: TfrmCheckList
     Top = 120
     Width = 16
     Height = 16
+    OnMouseMove = Image1MouseMove
   end
   object Image4: TImage
     Tag = 4
@@ -118,6 +120,7 @@ object frmCheckList: TfrmCheckList
     Top = 144
     Width = 16
     Height = 16
+    OnMouseMove = Image1MouseMove
   end
   object Image5: TImage
     Tag = 5
@@ -125,6 +128,7 @@ object frmCheckList: TfrmCheckList
     Top = 40
     Width = 16
     Height = 16
+    OnMouseMove = Image1MouseMove
   end
   object Image6: TImage
     Tag = 6
@@ -132,6 +136,7 @@ object frmCheckList: TfrmCheckList
     Top = 64
     Width = 16
     Height = 16
+    OnMouseMove = Image1MouseMove
   end
   object Label6: TLabel
     Tag = 6
@@ -146,6 +151,7 @@ object frmCheckList: TfrmCheckList
     Font.Name = 'MS Sans Serif'
     Font.Style = []
     ParentFont = False
+    OnMouseMove = Label1MouseMove
   end
   object Image7: TImage
     Tag = 7
@@ -153,6 +159,7 @@ object frmCheckList: TfrmCheckList
     Top = 176
     Width = 16
     Height = 16
+    OnMouseMove = Image1MouseMove
   end
   object Label7: TLabel
     Tag = 7
@@ -167,6 +174,7 @@ object frmCheckList: TfrmCheckList
     Font.Name = 'MS Sans Serif'
     Font.Style = []
     ParentFont = False
+    OnMouseMove = Label1MouseMove
   end
   object Shape1: TShape
     Left = 184
@@ -188,6 +196,15 @@ object frmCheckList: TfrmCheckList
     Font.Style = []
     ParentFont = False
     WordWrap = True
+  end
+  object bClose: TBitBtn
+    Left = 390
+    Top = 205
+    Width = 75
+    Height = 25
+    Caption = 'Close'
+    ModalResult = 1
+    TabOrder = 0
   end
   object ilCheckList: TImageList
     Left = 144

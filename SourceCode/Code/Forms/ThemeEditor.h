@@ -87,7 +87,6 @@ __published:	// IDE-managed Components
 	TToolButton *ToolButton2;
 	TToolButton *tbMode;
 	TWebBrowser *wbPreview;
-	TStatusBar *sbMain;
 	TMainMenu *MainMenu1;
 	TMenuItem *File1;
 	TMenuItem *New1;
